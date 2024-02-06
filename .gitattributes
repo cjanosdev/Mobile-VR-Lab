@@ -1,4 +1,16 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+/Users/coffee/Spring2024/SeniorProject/Mobile-VR-Lab/Mobile[[:space:]]VR[[:space:]]Lab[[:space:]]Unity/Assets filter=lfs diff=lfs merge=lfs -text
+/Users/coffee/Spring2024/SeniorProject/Mobile-VR-Lab/Mobile[[:space:]]VR[[:space:]]Lab[[:space:]]Unity/Library filter=lfs diff=lfs merge=lfs -text
+/Users/coffee/Spring2024/SeniorProject/Mobile-VR-Lab/Mobile[[:space:]]VR[[:space:]]Lab[[:space:]]Unity/Mobile[[:space:]]VR[[:space:]]Lab[[:space:]]Unity.sln filter=lfs diff=lfs merge=lfs -text
+/Users/coffee/Spring2024/SeniorProject/Mobile-VR-Lab/Mobile[[:space:]]VR[[:space:]]Lab[[:space:]]Unity/README.md filter=lfs diff=lfs merge=lfs -text
+/Users/coffee/Spring2024/SeniorProject/Mobile-VR-Lab/Mobile[[:space:]]VR[[:space:]]Lab[[:space:]]Unity/UserSettings filter=lfs diff=lfs merge=lfs -text
+/Users/coffee/Spring2024/SeniorProject/Mobile-VR-Lab/Mobile[[:space:]]VR[[:space:]]Lab[[:space:]]Unity/obj filter=lfs diff=lfs merge=lfs -text
+/Users/coffee/Spring2024/SeniorProject/Mobile-VR-Lab/Mobile[[:space:]]VR[[:space:]]Lab[[:space:]]Unity/Assembly-CSharp-firstpass.csproj filter=lfs diff=lfs merge=lfs -text
+/Users/coffee/Spring2024/SeniorProject/Mobile-VR-Lab/Mobile[[:space:]]VR[[:space:]]Lab[[:space:]]Unity/Assembly-CSharp.csproj filter=lfs diff=lfs merge=lfs -text
+/Users/coffee/Spring2024/SeniorProject/Mobile-VR-Lab/Mobile[[:space:]]VR[[:space:]]Lab[[:space:]]Unity/Logs filter=lfs diff=lfs merge=lfs -text
+/Users/coffee/Spring2024/SeniorProject/Mobile-VR-Lab/Mobile[[:space:]]VR[[:space:]]Lab[[:space:]]Unity/Packages filter=lfs diff=lfs merge=lfs -text
+/Users/coffee/Spring2024/SeniorProject/Mobile-VR-Lab/Mobile[[:space:]]VR[[:space:]]Lab[[:space:]]Unity/ProjectSettings filter=lfs diff=lfs merge=lfs -text
+/Users/coffee/Spring2024/SeniorProject/Mobile-VR-Lab/Mobile[[:space:]]VR[[:space:]]Lab[[:space:]]Unity/Temp filter=lfs diff=lfs merge=lfs -text
 *.zip filter=lfs diff=lfs merge=lfs -text
 */Assets/* filter=lfs diff=lfs merge=lfs -text

@@ -28,7 +28,8 @@ public class DebugLog : MonoBehaviour
 
         // Notify subscribers that the debug canvas is loaded
         OnDebugCanvasLoaded?.Invoke();
-        NetworkManager.InitializeSockets();
+       // NetworkManager networkManager = gameObject.AddComponent<NetworkManager>();
+      //  networkManager.InitializeSockets();
     }
 
     public void Log(string message)
