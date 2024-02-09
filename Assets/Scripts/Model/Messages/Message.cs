@@ -1,17 +1,16 @@
 using System.Collections.Generic;
+using Model.Messages;
+using Newtonsoft.Json;
 
 namespace Model
 {
-    public class Message<T>
+    public class Message<T> : MessageBase
     {
-        /// <summary>
-        /// The message type <see cref="MessageType"/>
-        /// </summary>
-        public MessageType MessageType { get; set; }
         
         /// <summary>
         ///     The message data.
         /// </summary>
+        [JsonProperty("kwargs")]
         public T Data { get; set; }
     }
 }

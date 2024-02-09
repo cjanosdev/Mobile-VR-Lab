@@ -1,16 +1,13 @@
+using Newtonsoft.Json;
+
 namespace Model.Messages.Query
 {
-    public class QueryData
+    public class QueryData : MessageBase
     {
         /// <summary>
-        ///     When true indicates the headset is turned on and "active"
-        ///     otherwise false means the headset is turned off or "inactive"
+        ///     Query the headset for information.
         /// </summary>
-        public bool IsActive { get; set; }
-        
-        /// <summary>
-        ///     Provides the battery percentage for the headset. 
-        /// </summary>
-        public double BatteryLevel { get; set; }
+        [JsonProperty("query")]
+        public HeadsetStatus Query { get; set; }
     }
 }
