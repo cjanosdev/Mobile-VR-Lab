@@ -41,8 +41,7 @@ namespace Model.Messages
                     // await this.queryRunner.Run(message)
                     break;
                 case MessageType.ChangeScene:
-                    // TODO: implement me
-                    // await this.changeSceneRunner.Run(message)
+                    await this.changeSceneRunner.Run(message as Message<ChangeSceneData>);
                     break;
                 case MessageType.Focus:
                     await this.focusRunner.Run(message as Message<FocusData>);
