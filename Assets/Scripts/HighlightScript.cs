@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class HighlightScript : MonoBehaviour
@@ -16,10 +17,11 @@ public class HighlightScript : MonoBehaviour
         defaultMaterial = cubeRenderer.material;
     }
 
-    public void HighlightFrontSide()
+    public Task HighlightFrontSide()
     {
         // Apply the highlight material to the cube
         cubeRenderer.material = highlightMaterial;
+        return Task.CompletedTask;
     }
 
     public void Unhighlight()
