@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Model.Messages;
 using Model.Messages.Query;
@@ -10,8 +11,26 @@ namespace Model.Focus
     {
         public Task Run(Message<FocusData> message)
         {
-            // Find the first cube GameObject in the scene
-            var cube = GameObject.FindWithTag("Cube");
+            UnityMainThreadDispatcher.Instance.Enqueue(() => InternalRun(message));
+            return Task.CompletedTask;
+        }
+
+        private async Task InternalRun(Message<FocusData> message)
+        {
+            var data = message.Data;
+            if (data != null)
+            {
+                await HighlightObjectAsync(data.ObjectID);
+            }
+            else
+            {
+                Debug.LogError("Message data is null. Cannot focus on object.");
+            }
+        }
+
+        private Task HighlightObjectAsync(string gameObjID)
+        {
+            var cube = GameObject.FindGameObjectWithTag(gameObjID);
 
             if (cube != null)
             {
@@ -29,9 +48,8 @@ namespace Model.Focus
             {
                 Debug.LogError("Cube GameObject not found in the scene.");
             }
-            
-            return Task.CompletedTask;
 
+            return Task.CompletedTask;
         }
     }
 }

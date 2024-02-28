@@ -986,7 +986,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightMaterial: {fileID: 2100000, guid: 80433fc593b1f466d94ebe12fbe2e8f5, type: 2}
-  cube: {fileID: 0}
+  cube: {fileID: 1725025776}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

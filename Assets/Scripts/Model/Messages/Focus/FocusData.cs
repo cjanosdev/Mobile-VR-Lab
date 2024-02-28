@@ -9,6 +9,6 @@ namespace Model.Focus
         /// The ID of the game object to focus on in the scene.
         /// </summary>
         [JsonProperty("object")]
-        public int ObjectID { get; set; }
+        public string ObjectID { get; set; }
     }
 }
