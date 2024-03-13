@@ -41,7 +41,7 @@ public class NetworkManager : MonoBehaviour
         try
         {
             _client = new TcpClient();
-            await _client.ConnectAsync("192.168.1.22", 15300);
+            await _client.ConnectAsync("192.168.1.28", 15300);
             _stream = _client.GetStream();
 
             await InitialConnectionAsync(_stream);

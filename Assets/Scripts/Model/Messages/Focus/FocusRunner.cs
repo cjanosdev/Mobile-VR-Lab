@@ -9,6 +9,7 @@ namespace Model.Focus
     
     public class FocusRunner
     {
+        private Material outlineMaterial;
         public Task Run(Message<FocusData> message)
         {
             UnityMainThreadDispatcher.Instance.Enqueue(() => InternalRun(message));
@@ -30,23 +31,48 @@ namespace Model.Focus
 
         private Task HighlightObjectAsync(string gameObjID)
         {
-            var cube = GameObject.FindGameObjectWithTag(gameObjID);
+            var objToHighlight = GameObject.FindGameObjectWithTag(gameObjID);
 
-            if (cube != null)
+            if (objToHighlight != null)
             {
-                HighlightScript highlightScript = cube.GetComponent<HighlightScript>();
-                if (highlightScript != null)
+                // Dynamically attach HighlightObject script
+                HighlightObject highlightScript = objToHighlight.GetComponent<HighlightObject>();
+                if (highlightScript == null)
                 {
-                    highlightScript.HighlightFrontSide();
+                    // If HighlightObject script doesn't exist, instantiate and attach it
+                    highlightScript = objToHighlight.AddComponent<HighlightObject>();
+                }
+                
+                // Load a material from the Resources folder
+                outlineMaterial = Resources.Load<Material>("OutlineMaterial");
+            
+                if (outlineMaterial != null)
+                {
+                    // Log the name of the loaded material
+                    Debug.Log("Loaded material: " + outlineMaterial.name);
                 }
                 else
                 {
-                    Debug.LogError("HighlightObject script not found on the cube GameObject.");
+                    Debug.LogError("Failed to load material: OutlineMaterial");
+                }
+                
+                // Set properties of the HighlightObject script (e.g., outline material)
+                if (highlightScript != null)
+                {
+                    // Assuming outlineMaterial is a public field in FocusRunner class
+                    highlightScript.outlineMaterial = outlineMaterial;
+                    
+                    // Apply the outline effect
+                    highlightScript.ApplyOutlineEffect();
+                }
+                else
+                {
+                    Debug.LogError($"Failed to attach HighlightObject script to the {objToHighlight.name} GameObject.");
                 }
             }
             else
             {
-                Debug.LogError("Cube GameObject not found in the scene.");
+                Debug.LogError("GameObject not found in the scene.");
             }
 
             return Task.CompletedTask;
