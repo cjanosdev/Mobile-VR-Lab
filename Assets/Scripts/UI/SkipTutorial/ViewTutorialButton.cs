@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 namespace UI.SkipTutorial
 {
-    public class ViewTutorial : MonoBehaviour
+    public class ViewTutorialButton : MonoBehaviour
     {
         public void OnViewTutorialButtonClick()
         {
