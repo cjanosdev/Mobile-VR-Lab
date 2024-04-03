@@ -9,6 +9,8 @@ using Model.InitialConnection;
 using Model.Messages;
 using Model.Messages.Query;
 using Newtonsoft.Json;
+using Meta;
+using Oculus.Interaction.Input;
 using UnityEngine;
 
 
@@ -106,7 +108,7 @@ public class NetworkManager : MonoBehaviour
         if (version != null)
         {
             // Sends headset ID back to Server.
-            var id = GenerateStringID();
+            var id = GenerateHeadsetUUID();
             
             var response = new InitialResponse
             {
@@ -196,9 +198,11 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
-    private static string GenerateStringID()
+    private static string GenerateHeadsetUUID()
     {
-        return "abcdefgh";
+        string uuid = SystemInfo.deviceUniqueIdentifier;
+        Debug.Log("Meta Quest 3 UUID: " + uuid);
+        return uuid;
     }
 
     private void OnApplicationQuit()
