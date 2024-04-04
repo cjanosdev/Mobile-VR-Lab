@@ -6,10 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene0.unity
+    path: Assets/Scenes/CoralAndInteractionScene0.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/SampleScene1.unity
+    path: Assets/Scenes/SceneChange1.unity
     guid: d75cb807e115349f5ac0ed94e05e0f0b
+  - enabled: 0
+    path: Assets/Scenes/testscene.unity
+    guid: f24fe579dee1f44b291c06c68f6aff57
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: fde3cdc552f244c329b6660629f9e76b, type: 2}
