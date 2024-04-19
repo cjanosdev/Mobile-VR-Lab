@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Cube
   - CoralModel
+  - SamplesInfoPanel
+  - Arrows
   layers:
   - Default
   - TransparentFX
