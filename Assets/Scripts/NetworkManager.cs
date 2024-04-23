@@ -18,27 +18,14 @@ public class NetworkManager : MonoBehaviour
     private TcpClient _client;
     private NetworkStream _stream;
     private MessageRunner _messageRunner;
-    public static NetworkManager _instance;
 
-
-    private void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad((this.gameObject));
-        }
-        else
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-    }
-
-    private async void Start()
+    private void Start()
     {
         this._messageRunner = new MessageRunner();
+        Task.Run(async() =>
+        {
         await InitializeSocketsAsync();
+        });
     }
 
     private async Task InitializeSocketsAsync()
@@ -46,7 +33,8 @@ public class NetworkManager : MonoBehaviour
         try
         {
             _client = new TcpClient();
-            await _client.ConnectAsync("172.20.10.3", 15300);
+            await _client.ConnectAsync("192.168.1.169", 15300);
+            //await _client.ConnectAsync("192.168.200.14", 15300);
             _stream = _client.GetStream();
 
             await InitialConnectionAsync(_stream);
@@ -110,29 +98,43 @@ public class NetworkManager : MonoBehaviour
         
         if (version != null)
         {
-            // Sends headset ID back to Server.
-            var id = GenerateHeadsetUUID();
-            
-            var response = new InitialResponse
+            UnityMainThreadDispatcher.instance.Enqueue(() =>
             {
-                ID = id
-            };
-
-            // Serialize the response object to JSON
-            var json = JsonConvert.SerializeObject(response);
-        
-            // Send length-prefixed JSON
-            await WriteMessageAsync(stream, json);
-        
-            // Wait for confirmation response
-            var confirmation = await ReadMessageAsync<InitialConfirmation>(stream);
-            if (confirmation is { SessionName: not null })
-            {
-                await ReceiveCommandsAsync(stream);
-            }
+                AsyncReadingLogic(stream);
+            });
         }
     }
-    
+    private async void AsyncReadingLogic(NetworkStream stream)
+    {
+        
+        // Sends headset ID back to Server.
+        // Need to send command to all headsets
+        // Make a dictionary for all player headsets
+        // foreach send command to all
+        var id = GenerateHeadsetUUID();
+
+        Task.Run(async() =>
+        {
+
+        var response = new InitialResponse
+        {
+            ID = id
+        };
+
+        // Serialize the response object to JSON
+        var json = JsonConvert.SerializeObject(response);
+        
+        // Send length-prefixed JSON
+        await WriteMessageAsync(stream, json);
+        
+        // Wait for confirmation response
+        var confirmation = await ReadMessageAsync<InitialConfirmation>(stream);
+        if (confirmation is { SessionName: not null })
+        {
+            await ReceiveCommandsAsync(stream);
+        }
+        });
+    }
 
     private async Task ReceiveCommandsAsync(NetworkStream networkStream)
     {
