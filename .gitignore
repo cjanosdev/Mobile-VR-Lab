@@ -73,6 +73,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Model which contains heavy coral model
- /[Aa]ssets/[Mm]odels/*
+ /[Aa]ssets/[Mm]odels/
 
 *build_BackUpThisFolder_ButDontShipItWithYourGame
