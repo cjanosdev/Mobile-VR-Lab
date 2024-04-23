@@ -12,7 +12,7 @@ namespace Model.Messages
     {
         private FocusRunner focusRunner;
         private ChangeSceneRunner changeSceneRunner;
-        private QueryRunner queryRunner;
+        // private QueryRunner queryRunner;
         private TransparencyRunner transparencyRunner;
         
         /// <summary>
@@ -20,7 +20,7 @@ namespace Model.Messages
         /// </summary>
         public MessageRunner()
         {
-            this.queryRunner = new QueryRunner();
+            // this.queryRunner = new QueryRunner();
             this.changeSceneRunner = new ChangeSceneRunner(UnityMainThreadDispatcher.instance);
             this.focusRunner = new FocusRunner();
             this.transparencyRunner = new TransparencyRunner();
