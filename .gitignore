@@ -73,6 +73,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Ignore files in the models folder, but not in the assets folder
-/[Mm]odels/*
+#/[Mm]odels/*
 
 *build_BackUpThisFolder_ButDontShipItWithYourGame
