@@ -18,14 +18,14 @@ public class NetworkManager : MonoBehaviour
     private TcpClient _client;
     private NetworkStream _stream;
     private MessageRunner _messageRunner;
-    public static NetworkManager instance;
+    public static NetworkManager _instance;
 
 
     private void Awake()
     {
-        if (instance == null)
+        if (_instance == null)
         {
-            instance = this;
+            _instance = this;
             DontDestroyOnLoad((this.gameObject));
         }
         else
