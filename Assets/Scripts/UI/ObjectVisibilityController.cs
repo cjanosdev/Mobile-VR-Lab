@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 
@@ -17,6 +18,7 @@ public class ObjectVisibilityController : MonoBehaviour
     public void InitializeController()
     {
         // Toggle visibility to true immediately
+        Console.WriteLine("setting vis to true");
         ToggleVisibility(true);
 
         // Start the coroutine to toggle visibility back to false after 5 seconds

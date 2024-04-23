@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Model.Messages;
 using UnityEngine;
@@ -9,16 +8,11 @@ namespace Model.ChangeScene
 {
     public class ChangeSceneRunner : IMessageRunner
     {
-        public ChangeSceneRunner()
+        private readonly UnityMainThreadDispatcher _mainThreadDispatcher;
+
+        public ChangeSceneRunner(UnityMainThreadDispatcher mainThreadDispatcher)
         {
-            // make sure the UnityMainThreadDispatcher instance is initialized.
-            if (UnityMainThreadDispatcher.Instance == null)
-            {
-                new GameObject("UnityMainThreadDispatcher")
-                    .AddComponent<UnityMainThreadDispatcher>();
-                
-                //Debug.LogError("UnityMainThreadDispatcher instance was not found. Make sure it's added to the scene and initialized.");
-            }
+            _mainThreadDispatcher = mainThreadDispatcher ?? throw new ArgumentNullException(nameof(mainThreadDispatcher));
         }
 
         public async Task Run<T>(Message<T> message) where T : MessageBase
@@ -41,18 +35,9 @@ namespace Model.ChangeScene
         {
             var tcs = new TaskCompletionSource<bool>();
 
-            UnityMainThreadDispatcher.Instance.Enqueue(() =>
+            _mainThreadDispatcher.Enqueue(() =>
             {
-                var asyncOperation = SceneManager.LoadSceneAsync(sceneID, LoadSceneMode.Single);
-                if (asyncOperation == null)
-                {
-                    Debug.LogError($"Failed to load the scene with ID: {sceneID}");
-                    tcs.SetResult(false); // Indicate that the scene loading failed
-                }
-                else
-                {
-                    asyncOperation.completed += _ => tcs.SetResult(true);
-                }
+                SceneManager.LoadScene(sceneID);
             });
 
             await tcs.Task;

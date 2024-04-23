@@ -19,10 +19,10 @@ public class EnablePassthrough : MonoBehaviour
     }
     
     // This method is called when the GameObject is selected using the Interaction SDK
-    public void OnSelect()
+    public void SetTransparencyMode(bool setTransparency)
     {
         // Toggle the passthrough mode
-        isOn = !isOn;
+        isOn = setTransparency;
         SetPassthroughMode(isOn);
     }
 
