@@ -18,5 +18,17 @@ namespace Model
         ///     on an object.
         /// </summary>
         Focus = 2,
+        
+        /// <summary>
+        ///     This message instructs the headset to set or unset attention mode.
+        /// </summary>
+        AttentionMode = 3,
+        
+        /// <summary>
+        ///     This message instructs the headset to set or unset passthrough mode.
+        /// </summary>
+        TransparencyMode = 4,
+        
+        
     }
 }

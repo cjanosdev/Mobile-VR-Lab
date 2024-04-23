@@ -9,8 +9,7 @@ using Model.InitialConnection;
 using Model.Messages;
 using Model.Messages.Query;
 using Newtonsoft.Json;
-using Meta;
-using Oculus.Interaction.Input;
+using Network.Messages.Transparency;
 using UnityEngine;
 
 
@@ -18,18 +17,22 @@ public class NetworkManager : MonoBehaviour
 {
     private TcpClient _client;
     private NetworkStream _stream;
-    private IMessageRunner _messageRunner;
-    
-    
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    private static void InitializeBeforeSceneLoad()
-    {
-        
-        var networkManager = FindObjectOfType<NetworkManager>();
-        if (networkManager != null) return;
-        networkManager = new GameObject("NetworkManager").AddComponent<NetworkManager>();
-        DontDestroyOnLoad(networkManager.gameObject);
+    private MessageRunner _messageRunner;
+    public static NetworkManager instance;
 
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad((this.gameObject));
+        }
+        else
+        {
+            Destroy(this.gameObject);
+            return;
+        }
     }
 
     private async void Start()
@@ -43,7 +46,7 @@ public class NetworkManager : MonoBehaviour
         try
         {
             _client = new TcpClient();
-            await _client.ConnectAsync("192.168.1.169", 15300);
+            await _client.ConnectAsync("172.20.10.3", 15300);
             _stream = _client.GetStream();
 
             await InitialConnectionAsync(_stream);
@@ -145,6 +148,7 @@ public class NetworkManager : MonoBehaviour
                 {
                     try
                     {
+                        Debug.LogError($"Message type is: ${message.MessageType}");
                         var response = await ProcessMessage(message);
                         var json = JsonConvert.SerializeObject(response);
                         
@@ -188,6 +192,18 @@ public class NetworkManager : MonoBehaviour
                 var focusMessage = new Message<FocusData>{MessageType = message.MessageType, Data = focusData};
                 await this._messageRunner.Run(focusMessage);
                 // temporary just to test connection with server will send a positive response:
+                return new MessageResponse()
+                {
+                    Error = false,
+                    Response = null,
+                };
+            
+            case MessageType.TransparencyMode:
+                var transparentData = JsonConvert.DeserializeObject<TransparencyData>(message.Data.ToString());
+                var transparentMessage = new Message<TransparencyData>
+                    { MessageType = message.MessageType, Data = transparentData };
+                await this._messageRunner.Run(transparentMessage);
+
                 return new MessageResponse()
                 {
                     Error = false,

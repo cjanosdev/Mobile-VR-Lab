@@ -1,7 +1,4 @@
-using System;
 using System.Threading.Tasks;
-using Model.Messages;
-using Model.Messages.Query;
 using UnityEngine;
 
 namespace Model.Focus
@@ -11,7 +8,7 @@ namespace Model.Focus
     {
         public Task Run(Message<FocusData> message)
         {
-            UnityMainThreadDispatcher.Instance.Enqueue(() => InternalRun(message));
+            UnityMainThreadDispatcher.instance.Enqueue(() => InternalRun(message));
             return Task.CompletedTask;
         }
 
