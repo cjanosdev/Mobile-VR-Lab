@@ -1,0 +1,4 @@
+{
+	"name": "TestAssemble",
+	"references": ["ScriptAssemble", "UnityEngine.TestRunner"]
+}
