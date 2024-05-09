@@ -28,12 +28,13 @@ public class NetworkManager : MonoBehaviour
         });
     }
 
-    private async Task InitializeSocketsAsync()
+    // made public for testing
+    public async Task InitializeSocketsAsync()
     {
         try
         {
             _client = new TcpClient();
-            await _client.ConnectAsync("192.168.1.169", 15300);
+            await _client.ConnectAsync("192.168.1.11", 15300);
             //await _client.ConnectAsync("192.168.200.14", 15300);
             _stream = _client.GetStream();
 
@@ -49,7 +50,8 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
-    private static async Task WriteMessageAsync(NetworkStream stream, string jsonString)
+    // public for testing
+    public static async Task WriteMessageAsync(NetworkStream stream, string jsonString)
     {
         // Serialize the message object to JSON
         byte[] jsonData = Encoding.UTF8.GetBytes(jsonString);
@@ -66,7 +68,8 @@ public class NetworkManager : MonoBehaviour
         await stream.WriteAsync(jsonData, 0, jsonData.Length);
     }
 
-    private static async Task<T> ReadMessageAsync<T>(NetworkStream stream)
+    // public for testing
+    public static async Task<T> ReadMessageAsync<T>(NetworkStream stream)
     {
         // Buffer to read the preamble containing the size of the JSON message
         var sizeBuffer = new byte[4]; // Assuming the size is encoded in a 4-byte integer
@@ -223,7 +226,8 @@ public class NetworkManager : MonoBehaviour
         return uuid;
     }
 
-    private void OnApplicationQuit()
+    // public for testing
+    public void OnApplicationQuit()
     {
         _client?.Close();
     }
