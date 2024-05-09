@@ -18,22 +18,35 @@ public class NetworkManager : MonoBehaviour
     private TcpClient _client;
     private NetworkStream _stream;
     private MessageRunner _messageRunner;
+    private bool _initializeOnStart = false;  // Set true by default, false when testing
+
+    
+    public void InjectTcpClientForTesting(TcpClient client) {
+        _client = client;
+    }
 
     private void Start()
     {
         this._messageRunner = new MessageRunner();
-        Task.Run(async() =>
+        if (_initializeOnStart)
         {
-        await InitializeSocketsAsync();
-        });
+            Task.Run(async() =>
+            {
+                await InitializeSocketsAsync();
+            });
+        }
+
     }
 
     public async Task InitializeSocketsAsync()
     {
         try
         {
-            _client = new TcpClient();
-            await _client.ConnectAsync("192.168.1.169", 15300);
+            if (_client == null)
+            {
+                _client = new TcpClient();
+            }
+            await _client.ConnectAsync("192.168.1.11", 15300);
             //await _client.ConnectAsync("192.168.200.14", 15300);
             _stream = _client.GetStream();
 
@@ -41,11 +54,11 @@ public class NetworkManager : MonoBehaviour
         } 
         catch (SocketException ex)
         {
-            Debug.LogError("Socket error connecting to server: " + ex.Message);
+            Debug.LogError($"Socket error connecting to server: {ex.SocketErrorCode} - {ex.Message}");
         }
         catch (Exception e)
         {
-            Debug.LogError("Error connecting to server: " + e.Message);
+            Debug.LogError($"General error connecting to server: {e.Message}");
         }
     }
 

@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
-using UnityEngine;
+using UnityEditor;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Text;
@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace Tests
@@ -25,22 +26,25 @@ namespace Tests
         {
             _networkManager = new GameObject().AddComponent<NetworkManager>();
             _fakeClient = new FakeTcpClient();
-            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            Socket socket = new DummySocket();
             _fakeStream = new FakeNetworkStream(socket);
     
             _fakeClient.SetStream(_fakeStream);
+            
+            _networkManager.InjectTcpClientForTesting(_fakeClient);
     
             // Inject fake TcpClient into NetworkManager
             typeof(NetworkManager)
                 .GetField("_client", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
                 .SetValue(_networkManager, _fakeClient);
+
         }
     
         [Test]
         public async Task InitializeSocketsAsync_ConnectsToServer()
         {
             // Arrange
-            var expectedServer = "192.168.1.11";
+            var expectedServer = "192.168.1.11"; // change this to the address hardcoded 
             var expectedPort = 15300;
             _fakeClient.SetConnectAsyncBehavior(() => Task.CompletedTask);
     
@@ -90,7 +94,7 @@ namespace Tests
     
         public void SetStream(FakeNetworkStream stream) => _stream = stream;
         public void SetConnectAsyncBehavior(Func<Task> connectBehavior) => _connectAsyncBehavior = connectBehavior;
-        public FakeNetworkStream GetStream() => _stream;
+        public new FakeNetworkStream GetStream() => _stream;
     
         public new Task ConnectAsync(string hostname, int port)
         {
@@ -109,6 +113,36 @@ namespace Tests
         }
     }
     
+    // public class DummySocket : Socket {
+    //     public DummySocket() : base(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp) {}
+    //     protected override void Dispose(bool disposing) {
+    //         // Override to prevent disposing of unmanaged resources.
+    //     }
+    // }
+    
+    public class DummySocket : Socket
+    {
+        public DummySocket()
+            : base(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
+        {
+        }
+
+        public override bool Connected()
+        {
+            return true; // Simulate always connected
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            // Override to prevent disposing of unmanaged resources.
+            if (disposing)
+            {
+                // Manage cleanup here if necessary
+            }
+            // base.Dispose(disposing); // Comment out to prevent closing the underlying socket
+        }
+    }
+
     
     public class FakeNetworkStream : NetworkStream
     {
@@ -119,7 +153,7 @@ namespace Tests
     
         // Constructor requires a Socket
         public FakeNetworkStream(Socket socket)
-            : base(socket, ownsSocket: true) // Assumes ownership of the socket for disposal
+            : base(socket, ownsSocket: true)
         {
         }
     
