@@ -28,7 +28,7 @@ public class NetworkManager : MonoBehaviour
         });
     }
 
-    private async Task InitializeSocketsAsync()
+    public async Task InitializeSocketsAsync()
     {
         try
         {
@@ -49,7 +49,7 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
-    private static async Task WriteMessageAsync(NetworkStream stream, string jsonString)
+    public static async Task WriteMessageAsync(NetworkStream stream, string jsonString)
     {
         // Serialize the message object to JSON
         byte[] jsonData = Encoding.UTF8.GetBytes(jsonString);
@@ -223,7 +223,7 @@ public class NetworkManager : MonoBehaviour
         return uuid;
     }
 
-    private void OnApplicationQuit()
+    public void OnApplicationQuit()
     {
         _client?.Close();
     }

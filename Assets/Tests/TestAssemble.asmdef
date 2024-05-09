@@ -1,4 +1,17 @@
 {
-	"name": "TestAssemble",
-	"references": ["ScriptAssemble", "UnityEngine.TestRunner"]
+    "name": "TestAssemble",
+    "rootNamespace": "Tests",
+    "references": [
+        "UnityEngine.TestRunner",
+        "ScriptAssemble"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
