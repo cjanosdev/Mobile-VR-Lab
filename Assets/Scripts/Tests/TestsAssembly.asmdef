@@ -1,8 +1,6 @@
 {
     "name": "TestsAssembly",
-    "rootNamespace": "",
     "references": [
-        "ScriptsAssembly",
         "UnityEngine.TestRunner"
     ],
     "overrideReferences": false

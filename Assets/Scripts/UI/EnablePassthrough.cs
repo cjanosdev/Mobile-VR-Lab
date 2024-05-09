@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEditor;
 
 public class EnablePassthrough : MonoBehaviour
 {
