@@ -12,7 +12,7 @@ namespace Model.ChangeScene
 
         public ChangeSceneRunner(UnityMainThreadDispatcher mainThreadDispatcher)
         {
-            _mainThreadDispatcher = mainThreadDispatcher ?? throw new ArgumentNullException(nameof(mainThreadDispatcher));
+            _mainThreadDispatcher = mainThreadDispatcher; // ?? throw new ArgumentNullException(nameof(mainThreadDispatcher));
         }
 
         public async Task Run<T>(Message<T> message) where T : MessageBase

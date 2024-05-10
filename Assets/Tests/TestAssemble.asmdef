@@ -1,0 +1,9 @@
+{
+    "name": "TestAssemble",
+    "rootNamespace": "Tests",
+    "references": [
+        "UnityEditor.TestRunner",
+        "ScriptAssemble",
+        "MoqAssembly"
+    ]
+}

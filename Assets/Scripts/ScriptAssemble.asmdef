@@ -1,0 +1,10 @@
+{
+    "name": "ScriptAssemble",
+    "references": [
+        "Oculus.VR",
+        "Oculus.Platform",
+        "Oculus.Platform.Editor",
+        "Oculus.VR.Editor",
+        "Oculus.VR.Scripts.Editor"
+    ]
+}
