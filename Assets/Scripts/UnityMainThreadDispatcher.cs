@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UnityMainThreadDispatcher : MonoBehaviour
 {
-    private static readonly Queue<Action> _executionQueue = new Queue<Action>();
+    private static readonly Queue<System.Action> _executionQueue = new Queue<Action>();
     public static UnityMainThreadDispatcher instance;
 
     private void Awake()

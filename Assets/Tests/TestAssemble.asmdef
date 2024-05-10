@@ -3,6 +3,7 @@
     "rootNamespace": "Tests",
     "references": [
         "UnityEditor.TestRunner",
-        "ScriptAssemble"
+        "ScriptAssemble",
+        "MoqAssembly"
     ]
 }
